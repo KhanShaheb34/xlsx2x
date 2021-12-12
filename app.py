@@ -1,5 +1,6 @@
 from flask import Flask, request, send_file
 from xlsx2x import generatePDF, generatePNG
+from waitress import serve
 
 app = Flask(__name__)
 
@@ -18,3 +19,5 @@ def get_pdf():
         f.write(XLSXFile)
     generatePDF('sheet.xlsx', 'out.pdf')
     return send_file('out.pdf', mimetype='document/pdf')
+
+serve(app, listen='*:5000')
