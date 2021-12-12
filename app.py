@@ -1,6 +1,7 @@
+from os import getenv
+from waitress import serve
 from flask import Flask, request, send_file
 from xlsx2x import generatePDF, generatePNG
-from waitress import serve
 
 app = Flask(__name__)
 
@@ -20,4 +21,6 @@ def get_pdf():
     generatePDF('sheet.xlsx', 'out.pdf')
     return send_file('out.pdf', mimetype='document/pdf')
 
-serve(app, listen='*:5000')
+PORT = getenv('PORT') or '5000'
+
+serve(app, listen=PORT)
